@@ -4,11 +4,12 @@ import java.util.*;
 import javax.swing.JOptionPane;
 
 public class FormSistema extends javax.swing.JFrame {
-
+    HashSet<Pessoa> hs1 = new HashSet<>();
+    HashSet<Pessoa> hs2 = new HashSet<>();
     
     public FormSistema() {
         initComponents();
-        //carregaArquivo();
+        
     }
 
 
@@ -54,7 +55,7 @@ public class FormSistema extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 834, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblProx, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,27 +216,27 @@ public class FormSistema extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(158, 158, 158)
+                .addGap(126, 126, 126)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
+                .addGap(91, 91, 91)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnExclusive)
                     .addComponent(btninterse))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(132, 132, 132)
                         .addComponent(btninterse, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnExclusive, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(277, Short.MAX_VALUE))
+                        .addComponent(btnExclusive, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(339, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -262,7 +263,16 @@ public class FormSistema extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
    
     void mostra(){
+        listHashTable.setText("");
         
+        if(!hs1.isEmpty())
+            for(Pessoa p: hs1)
+                listHashTable.append(p+"\n");
+        
+        listHashTable.append("---- Hash f2 ----\n"); 
+        if(!hs2.isEmpty())
+            for(Pessoa p: hs2)
+                listHashTable.append(p+"\n");
     }// fim mostra
    
      void mostraMap(){
@@ -270,23 +280,47 @@ public class FormSistema extends javax.swing.JFrame {
     }// fim mostra
     
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-      
+        Pessoa p = new Pessoa();
+        p.setNome(txtNome.getText());
+        p.setCpf(txtCpf.getText());
+        hs1.add(p);
+        mostra();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-      
+        Pessoa p = new Pessoa();
+        p.setCpf(txtCpf.getText());
+        if(hs1.contains(p) || hs2.contains(p))
+            JOptionPane.showMessageDialog(null, "Existe");
+        else
+            JOptionPane.showMessageDialog(null, ":(");
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnAddSet2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSet2ActionPerformed
-       
+        Pessoa p = new Pessoa();
+        p.setNome(txtNome.getText());
+        p.setCpf(txtCpf.getText());
+        hs2.add(p);
+        mostra();
     }//GEN-LAST:event_btnAddSet2ActionPerformed
 
     private void btninterseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btninterseActionPerformed
-          
+        HashSet<Pessoa> interseccao = new HashSet<>(hs1);
+        interseccao.retainAll(hs2);
+        listHashTable.append("----Intersecção---\n");
+        if(!interseccao.isEmpty())
+            for(Pessoa p:interseccao)
+                listHashTable.append(p+"\n");
     }//GEN-LAST:event_btninterseActionPerformed
 
     private void btnExclusiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExclusiveActionPerformed
-            
+        HashSet<Pessoa> dif = new HashSet<>(hs1);
+        dif.removeAll(hs2);
+        listHashTable.append("----Diferença---\n");
+        if(!dif.isEmpty())
+            for(Pessoa p:dif)
+                listHashTable.append(p+"\n");
     }//GEN-LAST:event_btnExclusiveActionPerformed
 
     private void btnBuscarhmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarhmActionPerformed
